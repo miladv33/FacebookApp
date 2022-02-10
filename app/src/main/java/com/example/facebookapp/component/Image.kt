@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -20,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.facebookapp.R
-import com.example.facebookapp.ui.theme.*
+import com.example.facebookapp.ui.theme.ImageSize
 
 @Composable
 fun circularImage(imageId: Int = R.drawable.portrait, size: Int = 64, hasStory:Boolean = false) {
@@ -37,9 +36,9 @@ fun circularImage(imageId: Int = R.drawable.portrait, size: Int = 64, hasStory:B
 
 @Preview
 @Composable
-fun PostImageBanner() {
+fun PostImageBanner(imageId: Int = R.drawable.portrait) {
     Image(
-        painter = painterResource(MaterialTheme.postImageId),
+        painter = painterResource(imageId),
         contentDescription = "avatar",
         contentScale = ContentScale.Crop,
         modifier = Modifier
@@ -51,28 +50,9 @@ fun PostImageBanner() {
 
 @Preview
 @Composable
-fun storyInMainPage(){
-    CompositionLocalProvider(LocalImageSize provides ImageSize()) {
-        StoryImageBanner()
-    }
-}
-
-@Preview
-@Composable
-fun storyInUserPage(){
-    CompositionLocalProvider(
-        LocalImageSize provides
-                ImageSize(storyImageCorner = 35.dp,
-                storyImageHeight = 85.dp, storyImageWidth = 75.dp),
-    LocalStoryImageId provides R.drawable.ic_launcher_background) {
-        StoryImageBanner()
-    }
-}
-
-@Composable
-fun StoryImageBanner() {
+fun StoryImageBanner(imageId: Int = R.drawable.portrait) {
     Image(
-        painter = painterResource(MaterialTheme.storyImageId),
+        painter = painterResource(imageId),
         contentDescription = "avatar",
         contentScale = ContentScale.Crop,
         modifier = Modifier

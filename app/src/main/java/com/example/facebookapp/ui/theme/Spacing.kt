@@ -6,7 +6,6 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.facebookapp.R
 
 data class ImageSize(
     val defaultValue: Dp = 0.dp,
@@ -31,8 +30,6 @@ data class Spacing(
 
 val LocalSpacing = compositionLocalOf { Spacing() }
 val LocalImageSize = compositionLocalOf { ImageSize() }
-val LocalPostImageId = compositionLocalOf { R.drawable.portrait }
-val LocalStoryImageId = compositionLocalOf { R.drawable.portrait }
 
 
 val MaterialTheme.Spacing: Spacing
@@ -45,12 +42,23 @@ val MaterialTheme.ImageSize: ImageSize
     @ReadOnlyComposable
     get() = LocalImageSize.current
 
-val MaterialTheme.storyImageId: Int
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalStoryImageId.current
+class TestClass {
+    fun ownTestFun() {
 
-val MaterialTheme.postImageId: Int
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalPostImageId.current
+    }
+}
+
+fun TestClass.newExtensionFun() {
+
+}
+
+var TestClass.newVal: Int
+    get() = 1
+    set(value) {}
+
+class main() {
+    var testClass = TestClass()
+    fun te() {
+        testClass.newVal = 10
+    }
+}
