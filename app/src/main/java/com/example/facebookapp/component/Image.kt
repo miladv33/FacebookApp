@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.facebookapp.R
+import com.example.facebookapp.ui.theme.ImageSize
 
 @Composable
 fun circularImage(imageId: Int = R.drawable.portrait, size: Int = 64, hasStory:Boolean = false) {
@@ -40,9 +42,9 @@ fun PostImageBanner(imageId: Int = R.drawable.portrait) {
         contentDescription = "avatar",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .width(dimensionResource(id = R.dimen.postImageWidth))
-            .height(dimensionResource(id = R.dimen.postImageHeight))
-            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.postImageCorner)))
+            .width(MaterialTheme.ImageSize.postImageWidth)
+            .height(MaterialTheme.ImageSize.postImageHeight)
+            .clip(RoundedCornerShape(MaterialTheme.ImageSize.postImageCorner))
     )
 }
 
@@ -54,9 +56,9 @@ fun StoryImageBanner(imageId: Int = R.drawable.portrait) {
         contentDescription = "avatar",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .width(dimensionResource(id = R.dimen.storyImageWidth))
-            .height(dimensionResource(id = R.dimen.storyImageHeight))
-            .clip(RoundedCornerShape(dimensionResource(id = R.dimen.storyImageCorner)))
+            .width(MaterialTheme.ImageSize.storyImageWidth)
+            .height(MaterialTheme.ImageSize.storyImageHeight)
+            .clip(RoundedCornerShape(MaterialTheme.ImageSize.storyImageCorner))
     )
 }
 
