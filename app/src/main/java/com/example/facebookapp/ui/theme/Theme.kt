@@ -6,6 +6,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import com.example.facebookapp.ui.theme.model.PostImageSize
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -38,7 +39,7 @@ fun FacebookAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     }
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),
-        LocalImageSize provides ImageSize()
+        LocalPostImageSize provides PostImageSize()
     ) {
         MaterialTheme(
             colors = colors,
