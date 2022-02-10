@@ -46,7 +46,6 @@ fun FacebookAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
             shapes = Shapes,
             content = content
         )
-        LocalImageSize.current.defaultValue
     }
 
 }
