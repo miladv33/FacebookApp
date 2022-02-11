@@ -9,14 +9,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import com.example.facebookapp.ui.theme.model.PostImageSize
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
+    primary = darkBackground,
+    primaryVariant = cardDarkColor,
     secondary = Teal200
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
+    primary = lightBackground,
+    primaryVariant = cardLightColor,
     secondary = Teal200
 
     /* Other default colors to override
@@ -37,16 +37,11 @@ fun FacebookAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     } else {
         LightColorPalette
     }
-    CompositionLocalProvider(
-        LocalSpacing provides Spacing(),
-        LocalPostImageSize provides PostImageSize()
-    ) {
-        MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = Shapes,
-            content = content
-        )
-    }
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
 
 }

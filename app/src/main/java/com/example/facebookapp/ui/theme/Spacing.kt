@@ -26,6 +26,9 @@ val LocalStoryImageSize = compositionLocalOf { StoryImageSize() }
 val LocalPostImageId = compositionLocalOf { R.drawable.portrait }
 val LocalStoryImageId = compositionLocalOf { R.drawable.portrait }
 
+val LocalLogoImageId = compositionLocalOf { R.drawable.ic_facebook_f_logo }
+val LocalLogoImageSize = compositionLocalOf { 64.dp }
+
 
 val MaterialTheme.Spacing: Spacing
     @Composable
