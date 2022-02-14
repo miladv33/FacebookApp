@@ -1,18 +1,19 @@
 package com.example.facebookapp.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,23 +23,28 @@ import com.example.facebookapp.ui.theme.*
 import com.example.facebookapp.ui.theme.model.StoryImageSize
 
 
-
 @Preview
 @Composable
-fun LogoGrayButton() {
+fun LogoGrayButton(iconId:Int = R.drawable.ic_search) {
 
-    CompositionLocalProvider(
-        LocalLogoImageSize provides dimensionResource(id = R.dimen.userAvatarSize)
-        , LocalLogoImageId provides R.drawable.ic_ellipse
-    ) {
-        CircularImage()
+    Box(){
+        CompositionLocalProvider(
+            LocalLogoImageSize provides dimensionResource(id = R.dimen.userAvatarSize),
+            LocalLogoImageId provides R.drawable.ic_ellipse
+        ) {
+            CircularImage()
+        }
+        Box(modifier = Modifier.size(dimensionResource(id = R.dimen.userAvatarSize)),
+            contentAlignment = Alignment.Center) {
+            CompositionLocalProvider(
+                LocalLogoImageSize provides dimensionResource(id = R.dimen.userGrayAvatarSize),
+                LocalLogoImageId provides iconId
+            ) {
+                CircularImage()
+            }
+        }
     }
-    CompositionLocalProvider(
-        LocalLogoImageSize provides dimensionResource(id = R.dimen.userGrayAvatarSize)
-        , LocalLogoImageId provides R.drawable.ic_facebook_f_logo
-    ) {
-        CircularImage()
-    }
+
 }
 
 
