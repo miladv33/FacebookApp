@@ -59,9 +59,9 @@ fun LogoButton() {
 
 
 @Composable
-fun FaceBookLogo() {
+fun CircleLogo(imageId:Int = R.drawable.ic_facebook_f_logo) {
     CompositionLocalProvider(
-        LocalLogoImageId provides R.drawable.ic_facebook_f_logo,
+        LocalLogoImageId provides imageId,
         LocalLogoImageSize provides dimensionResource(id = R.dimen.faceBookLogoSize)
     ) {
         CircularImage()
