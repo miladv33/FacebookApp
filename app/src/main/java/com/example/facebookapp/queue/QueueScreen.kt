@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.example.facebookapp.MainViewModel
+import org.junit.Test
 
 @Composable
 fun QueueScreen() {
@@ -36,9 +38,11 @@ var visible = MutableLiveData<Boolean>()
 @Composable
 fun TestAnimation(mainViewModel: MainViewModel) {
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(top = 40.dp), contentAlignment = Alignment.TopCenter)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp), contentAlignment = Alignment.TopCenter
+    )
     {
         CurrentCircle("", mainViewModel)
     }
@@ -46,17 +50,43 @@ fun TestAnimation(mainViewModel: MainViewModel) {
 
 @Composable
 fun CurrentCircle(testTag: String = "current", mainViewModel: MainViewModel) {
-    val selected by mainViewModel.scale.observeAsState(false)
-    val scale = animateFloatAsState(if (selected) 2f else 1f)
-    Box(
-        modifier = Modifier
-            .scale(scale.value)
-            .size(40.dp)
-            .clip(CircleShape)
-            .background(Color.Red)
-            .testTag(testTag)
-            .clickable { mainViewModel.onChangeScale() }
-    )
+    val selectedList = arrayListOf<State<Boolean>>()
+    mainViewModel.scaleList.forEach {
+        selectedList.add(it.observeAsState(initial = false))
+    }
+    val scaleList = arrayListOf<State<Float>>()
+    selectedList.forEach {
+        val scale = animateFloatAsState(if (it.value) 2f else 1f)
+        scaleList.add(scale)
+    }
+
+    Column {
+        Row() {
+            repeat(3) {
+                Spacer(modifier = Modifier.size(40.dp))
+                Box(
+                    modifier = Modifier
+                        .scale(scaleList[it].value)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(Color.Red)
+                        .testTag(testTag)
+                        .clickable { }
+                )
+            }
+        }
+        Spacer(modifier = Modifier.size(40.dp))
+        Row {
+            Button(onClick = { mainViewModel.goToPreviewsStep() }) {
+                Text(color = Color.White, text = "back to last")
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Button(onClick = { mainViewModel.goToNextStep() }) {
+                Text(color = Color.White, text = "Go to next")
+            }
+        }
+    }
+
 }
 
 @Composable
