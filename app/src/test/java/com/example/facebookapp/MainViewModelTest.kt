@@ -26,7 +26,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun change_position_to_next_circle() {
+    fun `change position to next circle`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         verify(mainViewModel).changeStepToForward()
@@ -34,7 +34,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun firstItemIsScaled() {
+    fun `first Item Is Scaled`() {
         val mainViewModel = spy(MainViewModel::class.java)
         for (scale in mainViewModel.scaleList) {
             if (scale == mainViewModel.scaleList.first())
@@ -45,7 +45,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun change_Current_Scale_and_move_to_another_circle() {
+    fun `change Current Scale and move to another circle`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         for (scale in mainViewModel.scaleList) {
@@ -57,7 +57,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun connote_scale_out_the_last_circle_() {
+    fun `connote scale out the last circle`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.scaleList
         mainViewModel.changeStepToForward()
@@ -68,7 +68,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun connote_scale_out_the_first_circle_if_never_went_to_next_step() {
+    fun `connote scale out the first circle if it never went to next step`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToPreviewsStep()
         verify(mainViewModel).changeStepToPreviews()
@@ -76,7 +76,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun change_position_to_lastStep() {
+    fun `change position to previous step`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         mainViewModel.goToPreviewsStep()
@@ -86,7 +86,7 @@ class MainViewModelTest {
 
 
     @Test
-    fun progressLine_to_next_step() {
+    fun `progressLine to next step`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         verify(mainViewModel).changeLineSizeToStepForward()
@@ -97,7 +97,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun progressLine_To_Previous_step() {
+    fun `progressLine To Previous step`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         mainViewModel.goToPreviewsStep()

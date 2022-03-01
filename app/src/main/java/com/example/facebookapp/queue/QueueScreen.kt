@@ -108,7 +108,7 @@ fun CurrentCircle(testTag: String = "current", mainViewModel: MainViewModel) {
 
 @Composable
 fun StepButton(mainViewModel: MainViewModel) {
-    Spacer(modifier = Modifier.size(40.dp))
+    Spacer(modifier = Modifier.size(80.dp))
     Row {
         Button(onClick = { mainViewModel.goToPreviewsStep() }) {
             Text(color = Color.White, text = "back to last")
