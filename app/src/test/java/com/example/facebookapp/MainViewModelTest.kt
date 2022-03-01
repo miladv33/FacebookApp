@@ -83,4 +83,26 @@ class MainViewModelTest {
         verify(mainViewModel).changeStepToPreviews()
         assertEquals(mainViewModel.queueStep.value, 0)
     }
+
+
+    @Test
+    fun progressLine_to_next_step() {
+        val mainViewModel = spy(MainViewModel::class.java)
+        mainViewModel.goToNextStep()
+        verify(mainViewModel).changeLineSizeToStepForward()
+        assertEquals(mainViewModel.lineProgressListState[0].value, true)
+        mainViewModel.goToNextStep()
+        assertEquals(mainViewModel.lineProgressListState[0].value, true)
+        assertEquals(mainViewModel.lineProgressListState[1].value, true)
+    }
+
+    @Test
+    fun progressLine_To_Previous_step() {
+        val mainViewModel = spy(MainViewModel::class.java)
+        mainViewModel.goToNextStep()
+        mainViewModel.goToPreviewsStep()
+        verify(mainViewModel).changeLineSizeToStepBack()
+        assertEquals(mainViewModel.lineProgressListState[0].value, false)
+    }
+
 }

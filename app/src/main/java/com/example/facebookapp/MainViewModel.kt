@@ -8,36 +8,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
+    val lineProgressListState: ArrayList<MutableLiveData<Boolean>> = ArrayList()
     val scaleList: ArrayList<MutableLiveData<Boolean>> = ArrayList()
 
     private val _queueStep = MutableLiveData(0)
     val queueStep: LiveData<Int> = _queueStep
 
-    private val _name = MutableLiveData("")
-    val name: LiveData<String> = _name
-
-    private val _visibility = MutableLiveData(true)
-    val visibility: LiveData<Boolean> = _visibility
-
-    private val _scale = MutableLiveData(false)
-    val scale: LiveData<Boolean> = _scale
-
     init {
         setObservableLiveDataScale()
+        setProgressList()
     }
-
-    fun onNameChange(newName: String) {
-        _name.value = newName
-    }
-
-    fun onChangeVisibility() {
-        _visibility.value = _visibility.value?.not()
-    }
-
 
     fun goToNextStep() {
         changeStepToForward()
         onChangeScale()
+        changeLineSizeToStepForward()
     }
 
     fun changeStepToForward() {
@@ -60,11 +45,33 @@ class MainViewModel @Inject constructor() : ViewModel() {
     fun goToPreviewsStep() {
         changeStepToPreviews()
         onChangeScale()
+        changeLineSizeToStepBack()
     }
 
     fun changeStepToPreviews() {
         if (_queueStep.value?.minus(1)!! > -1)
             _queueStep.value = _queueStep.value?.minus(1)
+    }
+
+    fun changeLineSizeToStepForward() {
+        lineProgressListState.forEachIndexed { index, element ->
+                if (index ==  _queueStep.value?.minus(1)){
+                    element.value = true
+                }
+        }
+    }
+
+    fun setProgressList() {
+        lineProgressListState.add(MutableLiveData(false))
+        lineProgressListState.add(MutableLiveData(false))
+    }
+
+    fun changeLineSizeToStepBack() {
+        lineProgressListState.forEachIndexed { index, element ->
+            if (index == _queueStep.value) {
+                element.value = false
+            }
+        }
     }
 
 }

@@ -1,12 +1,15 @@
 package com.example.facebookapp.queue
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,7 +22,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.example.facebookapp.MainViewModel
-import org.junit.Test
+import com.example.facebookapp.ui.theme.nextStepCircle
+import com.example.facebookapp.ui.theme.selectedCircle
+import com.example.facebookapp.ui.theme.unselectedCircle
 
 @Composable
 fun QueueScreen() {
@@ -37,14 +42,30 @@ var visible = MutableLiveData<Boolean>()
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TestAnimation(mainViewModel: MainViewModel) {
-
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 40.dp), contentAlignment = Alignment.TopCenter
+            .fillMaxWidth()
+            .padding(top = 40.dp)
+            ,contentAlignment = Alignment.Center
     )
     {
-        CurrentCircle("", mainViewModel)
+        Column {
+            Box(contentAlignment = Alignment.CenterStart) {
+                LinesProgress(mainViewModel = mainViewModel)
+                CurrentCircle("", mainViewModel)
+            }
+            StepButton(mainViewModel = mainViewModel)
+        }
+    }
+}
+
+@Composable
+fun LinesProgress(mainViewModel: MainViewModel) {
+    FixedLine()
+    Row {
+        repeat(2) {
+            ButtonAnimation(it, mainViewModel = mainViewModel)
+        }
     }
 }
 
@@ -60,34 +81,81 @@ fun CurrentCircle(testTag: String = "current", mainViewModel: MainViewModel) {
         scaleList.add(scale)
     }
 
-    Column {
-        Row() {
-            repeat(3) {
-                Spacer(modifier = Modifier.size(40.dp))
-                Box(
-                    modifier = Modifier
-                        .scale(scaleList[it].value)
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .background(Color.Red)
-                        .testTag(testTag)
-                        .clickable { }
-                )
-            }
-        }
-        Spacer(modifier = Modifier.size(40.dp))
-        Row {
-            Button(onClick = { mainViewModel.goToPreviewsStep() }) {
-                Text(color = Color.White, text = "back to last")
-            }
-            Spacer(modifier = Modifier.size(20.dp))
-            Button(onClick = { mainViewModel.goToNextStep() }) {
-                Text(color = Color.White, text = "Go to next")
-            }
+
+    Row() {
+        repeat(3) {
+            val step = mainViewModel.queueStep.observeAsState()
+            val color = animateColorAsState(
+                when {
+                    step.value == it -> selectedCircle
+                    step.value!! < it -> nextStepCircle
+                    else -> unselectedCircle
+                }
+            )
+            Box(
+                modifier = Modifier
+                    .scale(scaleList[it].value)
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(color.value)
+                    .testTag(testTag)
+                    .clickable { }
+            )
+            Spacer(modifier = Modifier.size(40.dp))
         }
     }
-
 }
+
+@Composable
+fun StepButton(mainViewModel: MainViewModel) {
+    Spacer(modifier = Modifier.size(40.dp))
+    Row {
+        Button(onClick = { mainViewModel.goToPreviewsStep() }) {
+            Text(color = Color.White, text = "back to last")
+        }
+        Spacer(modifier = Modifier.size(20.dp))
+        Button(onClick = { mainViewModel.goToNextStep() }) {
+            Text(color = Color.White, text = "Go to next")
+        }
+    }
+}
+
+@Composable
+fun ButtonAnimation(index: Int, mainViewModel: MainViewModel) {
+    val isStepped = mainViewModel.lineProgressListState[index].observeAsState()
+    val size = if (isStepped.value == false) 0.dp else 100.dp
+    Button(
+        onClick = { },
+        colors = ButtonDefaults.buttonColors(backgroundColor = unselectedCircle),
+        modifier = Modifier
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 500,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+            .height(10.dp)
+            .width(size)
+    ) {}
+}
+
+@Composable
+fun FixedLine() {
+    Button(
+        onClick = { },
+        colors = ButtonDefaults.buttonColors(backgroundColor = nextStepCircle),
+        modifier = Modifier
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 500,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+            .height(10.dp)
+            .width(200.dp)
+    ) {}
+}
+
 
 @Composable
 fun JointButton() {
