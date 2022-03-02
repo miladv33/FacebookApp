@@ -68,7 +68,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `connote scale out the first circle if it never went to next step`() {
+    fun `connote scale out the first circle if it never went to the next step`() {
         val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToPreviewsStep()
         verify(mainViewModel).changeStepToPreviews()
@@ -91,6 +91,7 @@ class MainViewModelTest {
         mainViewModel.goToNextStep()
         verify(mainViewModel).changeLineSizeToStepForward()
         assertEquals(mainViewModel.lineProgressListState[0].value, true)
+        assertEquals(mainViewModel.lineProgressListState[1].value, false)
         mainViewModel.goToNextStep()
         assertEquals(mainViewModel.lineProgressListState[0].value, true)
         assertEquals(mainViewModel.lineProgressListState[1].value, true)

@@ -111,11 +111,11 @@ fun StepButton(mainViewModel: MainViewModel) {
     Spacer(modifier = Modifier.size(80.dp))
     Row {
         Button(onClick = { mainViewModel.goToPreviewsStep() }) {
-            Text(color = Color.White, text = "back to last")
+            Text(color = Color.White, text = "back")
         }
         Spacer(modifier = Modifier.size(20.dp))
         Button(onClick = { mainViewModel.goToNextStep() }) {
-            Text(color = Color.White, text = "Go to next")
+            Text(color = Color.White, text = "next")
         }
     }
 }
