@@ -8,9 +8,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
+    val textList = arrayListOf(R.string.charge,R.string.queue,R.string.enter_the_room)
     val lineProgressListState: ArrayList<MutableLiveData<Boolean>> = ArrayList()
     val scaleList: ArrayList<MutableLiveData<Boolean>> = ArrayList()
-
+    val iconList = arrayListOf(R.drawable.ic_business_card, R.drawable.ic_game_queue, R.drawable.ic_game_room)
     private val _queueStep = MutableLiveData(0)
     val queueStep: LiveData<Int> = _queueStep
 

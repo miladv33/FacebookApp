@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,24 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import com.example.facebookapp.MainViewModel
+import com.example.facebookapp.R
 import com.example.facebookapp.ui.theme.nextStepCircle
 import com.example.facebookapp.ui.theme.selectedCircle
 import com.example.facebookapp.ui.theme.unselectedCircle
 
-@Composable
-fun QueueScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
-        Column {
-            Spacer(modifier = Modifier.size(20.dp))
-            JointButton()
-        }
-    }
-
-}
 
 var visible = MutableLiveData<Boolean>()
 
@@ -92,15 +88,26 @@ fun CurrentCircle(testTag: String = "current", mainViewModel: MainViewModel) {
                     else -> unselectedCircle
                 }
             )
-            Box(
-                modifier = Modifier
-                    .scale(scaleList[it].value)
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(color.value)
-                    .testTag(testTag)
-                    .clickable { }
+            val iconColor = animateColorAsState(
+                when {
+                    step.value!! >= it -> Color.White
+                    else -> Color.Gray
+                }
             )
+            Column {
+                Box(
+                    modifier = Modifier
+                        .scale(scaleList[it].value)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(color.value)
+                        .testTag(testTag)
+                        .clickable { }, contentAlignment = Alignment.Center
+                ) {
+                    val image: Painter = painterResource(id = mainViewModel.iconList[it])
+                    Image(painter = image, contentDescription = "", colorFilter = ColorFilter.tint(iconColor.value))
+                }
+            }
             Spacer(modifier = Modifier.size(40.dp))
         }
     }
@@ -154,16 +161,4 @@ fun FixedLine() {
             .height(10.dp)
             .width(200.dp)
     ) {}
-}
-
-
-@Composable
-fun JointButton() {
-    Button(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .testTag("joinButton")
-            .size(50.dp)
-    ) {
-    }
 }

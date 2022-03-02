@@ -20,14 +20,15 @@ class MainViewModelTest {
 //
 //    @Inject
 
+    lateinit var mainViewModel:MainViewModel
 
     @Before
     fun init() {
+        mainViewModel = spy(MainViewModel::class.java)
     }
 
     @Test
     fun `change position to next circle`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         verify(mainViewModel).changeStepToForward()
         assertEquals(mainViewModel.queueStep.value, 1)
@@ -35,7 +36,6 @@ class MainViewModelTest {
 
     @Test
     fun `first Item Is Scaled`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         for (scale in mainViewModel.scaleList) {
             if (scale == mainViewModel.scaleList.first())
                 assertEquals(scale.value, true)
@@ -46,7 +46,6 @@ class MainViewModelTest {
 
     @Test
     fun `change Current Scale and move to another circle`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         for (scale in mainViewModel.scaleList) {
             if (scale == mainViewModel.scaleList[1])
@@ -58,7 +57,6 @@ class MainViewModelTest {
 
     @Test
     fun `connote scale out the last circle`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.scaleList
         mainViewModel.changeStepToForward()
         mainViewModel.changeStepToForward()
@@ -69,7 +67,6 @@ class MainViewModelTest {
 
     @Test
     fun `connote scale out the first circle if it never went to the next step`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToPreviewsStep()
         verify(mainViewModel).changeStepToPreviews()
         assertEquals(mainViewModel.queueStep.value, 0)
@@ -77,7 +74,6 @@ class MainViewModelTest {
 
     @Test
     fun `change position to previous step`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         mainViewModel.goToPreviewsStep()
         verify(mainViewModel).changeStepToPreviews()
@@ -87,7 +83,6 @@ class MainViewModelTest {
 
     @Test
     fun `progressLine to next step`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         verify(mainViewModel).changeLineSizeToStepForward()
         assertEquals(mainViewModel.lineProgressListState[0].value, true)
@@ -99,7 +94,6 @@ class MainViewModelTest {
 
     @Test
     fun `progressLine To Previous step`() {
-        val mainViewModel = spy(MainViewModel::class.java)
         mainViewModel.goToNextStep()
         mainViewModel.goToPreviewsStep()
         verify(mainViewModel).changeLineSizeToStepBack()
