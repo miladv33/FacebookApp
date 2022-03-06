@@ -13,7 +13,7 @@ jobs:
       - name: Publish CodeCoverage
         run: bash <(curl -s https://codecov.io/bash) -f jacocoReport/**/*.xml
       - name: Build Debug Apk
-        run: ./gradlew assembleDebug
+        run: ./gradlew  build --continue
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
