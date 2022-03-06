@@ -1,0 +1,21 @@
+name: build
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run test & Coverage
+        run: ./gradlew check testDebugUnitTestCoverage
+      - name: Publish CodeCoverage
+        run: bash <(curl -s https://codecov.io/bash) -f jacocoReport/**/*.xml
+      - name: Build Debug Apk
+        run: ./gradlew assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: app/build/outputs/apk
