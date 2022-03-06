@@ -24,3 +24,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    
+    - name: Android Builder
+      uses: b4s36t4/Android-Action@0.0.1
