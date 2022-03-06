@@ -15,6 +15,11 @@ android {
         versionCode 1
         versionName "1.0"
 
+        android {
+            lint {
+                baseline = file("lint-baseline.xml")
+            }
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        testInstrumentationRunner "com.example.facebookapp.CustomTestRunner"
 
