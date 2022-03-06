@@ -24,6 +24,3 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    
-    - name: Release APK
-      uses: ShowMeThe/github_action_release@v0.01
